@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Attendance Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Student Attendance Tracker</h1>
+            <nav class="main-nav">
+                <button class="nav-btn active" data-page="home">Home</button>
+                <button class="nav-btn" data-page="mark-attendance">Mark Attendance</button>
+                <button class="nav-btn" data-page="weekly-schedule">Weekly Schedule</button>
+                <button class="nav-btn" data-page="subject-management">Subject Management</button>
+                <button class="nav-btn" data-page="reports">Reports</button>
+            </nav>
+        </header>
+
+        <!-- Home Page -->
+        <div id="page-home" class="page active">
+            <!-- Global Summary Section -->
+            <section id="global-summary" class="global-summary">
+                <h2>Global Summary</h2>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <span class="summary-label">Total Subjects</span>
+                        <span class="summary-value" id="total-subjects">0</span>
+                    </div>
+                    <div class="summary-card">
+                        <span class="summary-label">Total Units</span>
+                        <span class="summary-value" id="total-units">0</span>
+                    </div>
+                    <div class="summary-card">
+                        <span class="summary-label">Attended Units</span>
+                        <span class="summary-value" id="attended-units">0</span>
+                    </div>
+                    <div class="summary-card">
+                        <span class="summary-label">Overall Attendance</span>
+                        <span class="summary-value" id="overall-attendance">0%</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Subject Dashboard Section -->
+            <section id="subject-dashboard" class="subject-dashboard">
+                <h2>Subject Dashboard</h2>
+                <div id="dashboard-grid" class="dashboard-grid"></div>
+            </section>
+        </div>
+
+        <!-- Mark Attendance Page -->
+        <div id="page-mark-attendance" class="page">
+            <section id="attendance-marking" class="attendance-marking">
+                <h2>Mark Attendance</h2>
+                <div class="date-selector">
+                    <label for="attendance-date">Select Date:</label>
+                    <input type="date" id="attendance-date" required>
+                    <button id="load-recommendations-btn" class="btn btn-primary">Load Today's Classes</button>
+                </div>
+                <div id="attendance-recommendations" class="attendance-recommendations"></div>
+                <div class="extra-class-section">
+                    <h3>Add Extra Class</h3>
+                    <div class="form-group">
+                        <select id="extra-subject-select"></select>
+                        <input type="number" id="extra-hours-input" placeholder="Hours" min="0.5" step="0.5" value="1">
+                        <select id="extra-status-select">
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
+                        </select>
+                        <button id="add-extra-class-btn" class="btn btn-secondary">Add Extra Class</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="attendance-history" class="attendance-history">
+                <h2>Attendance History - Delete Marked Attendance</h2>
+                <div id="attendance-history-list" class="attendance-history-list"></div>
+            </section>
+        </div>
+
+        <!-- Weekly Schedule Page -->
+        <div id="page-weekly-schedule" class="page">
+            <section id="weekly-schedule" class="weekly-schedule">
+                <h2>Weekly Schedule</h2>
+                <div id="schedule-editor" class="schedule-editor">
+                    <div class="schedule-days">
+                        <div class="schedule-day" data-day="monday">
+                            <h3>Monday</h3>
+                            <div class="schedule-entries" id="schedule-monday"></div>
+                            <button class="btn btn-small btn-add-entry" data-day="monday">+ Add Class</button>
+                        </div>
+                        <div class="schedule-day" data-day="tuesday">
+                            <h3>Tuesday</h3>
+                            <div class="schedule-entries" id="schedule-tuesday"></div>
+                            <button class="btn btn-small btn-add-entry" data-day="tuesday">+ Add Class</button>
+                        </div>
+                        <div class="schedule-day" data-day="wednesday">
+                            <h3>Wednesday</h3>
+                            <div class="schedule-entries" id="schedule-wednesday"></div>
+                            <button class="btn btn-small btn-add-entry" data-day="wednesday">+ Add Class</button>
+                        </div>
+                        <div class="schedule-day" data-day="thursday">
+                            <h3>Thursday</h3>
+                            <div class="schedule-entries" id="schedule-thursday"></div>
+                            <button class="btn btn-small btn-add-entry" data-day="thursday">+ Add Class</button>
+                        </div>
+                        <div class="schedule-day" data-day="friday">
+                            <h3>Friday</h3>
+                            <div class="schedule-entries" id="schedule-friday"></div>
+                            <button class="btn btn-small btn-add-entry" data-day="friday">+ Add Class</button>
+                        </div>
+                        <div class="schedule-day" data-day="saturday">
+                            <h3>Saturday</h3>
+                            <div class="schedule-entries" id="schedule-saturday"></div>
+                            <button class="btn btn-small btn-add-entry" data-day="saturday">+ Add Class</button>
+                        </div>
+                        <div class="schedule-day" data-day="sunday">
+                            <h3>Sunday</h3>
+                            <div class="schedule-entries" id="schedule-sunday"></div>
+                            <button class="btn btn-small btn-add-entry" data-day="sunday">+ Add Class</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Subject Management Page -->
+        <div id="page-subject-management" class="page">
+            <section id="subject-management" class="subject-management">
+                <h2>Subject Management</h2>
+                <div class="form-group">
+                    <input type="text" id="subject-name-input" placeholder="Enter subject name" maxlength="50">
+                    <button id="add-subject-btn" class="btn btn-primary">Add Subject</button>
+                </div>
+                <div id="subjects-list" class="subjects-list"></div>
+            </section>
+        </div>
+
+        <!-- Reports Page -->
+        <div id="page-reports" class="page">
+            <section id="reports-section" class="reports-section">
+                <h2>Custom Dashboard & Export</h2>
+                <div class="form-group">
+                    <select id="report-subject-select">
+                        <option value="">Select Subject (or leave empty for all)</option>
+                    </select>
+                    <input type="date" id="report-start-date" placeholder="Start Date">
+                    <input type="date" id="report-end-date" placeholder="End Date">
+                    <button id="export-csv-btn" class="btn btn-primary">Export CSV</button>
+                </div>
+                <div id="report-preview" class="report-preview"></div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Modal for Confirmations -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <p id="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="modal-confirm" class="btn btn-danger">Confirm</button>
+                <button id="modal-cancel" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
